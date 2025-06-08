@@ -1,112 +1,37 @@
-# ZimFlow – AI Learning Without Internet
+# ZimFlow – Offline AI Learning Assistant
 
-**ZimFlow** is a Chrome extension that provides Gemini Nano AI-powered learning and translation capabilities using Chrome's Built-in AI APIs - completely offline and privacy-focused.
+ZimFlow is a Chrome extension powered by Gemini Nano AI, providing offline summarization, quiz generation, translation, and AI Q&A.
 
-## ✨ Features
+## Main Features
 
-### 🧠 Text Summarization
-- **Context Menu Integration**: Right-click on selected text to instantly generate summaries
-- **Structured Output**: Get organized summaries with key concepts, important details, and learning focus
+- **AI Summarization**: Instantly generate structured summaries from selected or input text.
+- **Offline Translation**: Translate between 20+ languages locally, no internet required.
+- **Gemma AI Chat & Image**: Chat with AI using text, images, or screenshots for multimodal understanding.
 
-### 🎯 Interactive Quiz Generation
-- **Auto-Generated Quizzes**: Create multiple-choice questions based on your summaries
-- **Educational Focus**: Questions test comprehension rather than memorization
+## Installation & Usage
 
-### 🌐 Offline AI Translation
-- **Real-time Translation**: Instant translation without internet connection
-
-## 🧪 Built-In AI APIs
-
-This project leverages Chrome's cutting-edge Built-in AI capabilities:
-
-- **[Prompt API](https://developer.chrome.com/docs/ai/built-in)**: For text summarization using Gemini Nano
-- **[Translator API](https://developer.chrome.com/docs/ai/built-in)**: For offline translation between 20+ languages
-
-All documentation for the built-in AI APIs can be found at: https://developer.chrome.com/docs/ai/built-in
-
-## ⚙️ Setup
-
-### Prerequisites
-
-- **Chrome Canary** (version 138+)
-
-### Enable Chrome Flags
-
-Before using ZimFlow, enable the following experimental flags in Chrome:
-
-1. Navigate to `chrome://flags/` in your browser
-2. Enable these flags:
-   ```
-   chrome://flags/#optimization-guide-on-device-model
-   chrome://flags/#prompt-api-for-gemini-nano
-   chrome://flags/#translation-api
-   ```
-3. Restart Chrome
-
-### Installation
-
-1. **Clone the repository**:
+1. Requires Chrome Canary 138+ with experimental AI features enabled (see below).
+2. Clone this repo and install dependencies:
    ```bash
    git clone https://github.com/zicojiao/zim-flow.git
    cd zim-flow
-   ```
-
-2. **Install dependencies**:
-   ```bash
    pnpm install
-   ```
-
-3. **Development mode**:
-   ```bash
    pnpm run dev
    ```
+3. Load the `/build/chrome-mv3-dev` folder as an unpacked extension in Chrome Extensions page.
 
-4. **Build for production**:
-   ```bash
-   pnpm run build
-   ```
+## Enable Chrome AI Features
 
-5. **Load extension in Chrome**:
-   - Open Chrome Canary
-   - Navigate to `chrome://extensions/`
-   - Enable "Developer mode"
-   - Click "Load unpacked"
-   - Select the `/build` folder
+Go to `chrome://flags/` and enable:
+- #optimization-guide-on-device-model
+- #prompt-api-for-gemini-nano
+- #translation-api
 
-## 🚀 Usage
+Ref: https://developer.chrome.com/docs/ai/get-started
 
-### Text Summarization
+## Notes
 
-1. **Context Menu Method**:
-   - Select any text on a webpage
-   - Right-click and choose "Generate Summary"
-   - The side panel will open with your summary
+- All AI features run locally and offline for privacy.
+- Requires Chrome experimental built-in AI support.
 
-2. **Manual Input Method**:
-   - Click the ZimFlow extension icon
-   - Go to the "Summary" tab
-   - Enter or paste your text
-   - Click "Generate Summary"
-
-### Quiz Generation
-
-1. Generate a summary first
-2. Navigate to the "Quiz" tab
-3. Click "Generate Quiz"
-4. Answer the multiple-choice question
-5. View explanations and try again
-
-### Translation
-
-1. Go to the "Translator" tab
-2. Select source and target languages
-3. Click "Create Translator" (first time only)
-4. Enter text and click "Translate"
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-**Note**: This extension requires Chrome's experimental Built-in AI features. These APIs are currently in development and subject to change. 
+MIT License. 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "~components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~components/ui/card";
 import { Button } from "~components/ui/button";
 import { Badge } from "~components/ui/badge";
 import { Textarea } from "~components/ui/textarea";
@@ -13,12 +13,13 @@ import {
   Loader2,
   Download
 } from "lucide-react";
-
-interface TranslatorProps {
-  sourceLanguage: string;
-  targetLanguage: string;
-  onLanguageChange?: (source: string, target: string) => void;
-}
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~components/ui/select";
 
 interface TranslationState {
   isAvailable: boolean | null;
@@ -49,14 +50,13 @@ const languages = [
   { code: "no", name: "Norwegian" },
   { code: "fi", name: "Finnish" },
   { code: "pl", name: "Polish" },
-  { code: "tr", name: "Turkish" }
+  { code: "tr", name: "Turkish" },
+  { code: "bn", name: "Bengali" },
 ];
 
-export const TranslatorViewer: React.FC<TranslatorProps> = ({
-  sourceLanguage,
-  targetLanguage,
-  onLanguageChange
-}) => {
+export const TranslatorViewer: React.FC = () => {
+  const [sourceLanguage, setSourceLanguage] = useState("en");
+  const [targetLanguage, setTargetLanguage] = useState("zh-CN");
   const [inputText, setInputText] = useState("");
   const [translatedText, setTranslatedText] = useState("");
   const [translator, setTranslator] = useState<any>(null);
@@ -68,10 +68,42 @@ export const TranslatorViewer: React.FC<TranslatorProps> = ({
     error: null
   });
 
-  // Check translator availability when languages change
   useEffect(() => {
     checkTranslatorAvailability();
+    if (translator) {
+      translator.destroy();
+      setTranslator(null);
+    }
+    setTranslatedText("");
   }, [sourceLanguage, targetLanguage]);
+
+  useEffect(() => {
+    if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+      chrome.storage.local.get('translateText', (result) => {
+        if (result.translateText) {
+          setInputText(result.translateText);
+          chrome.storage.local.remove('translateText');
+        }
+      });
+      const handleStorageChange = (changes: any, areaName: string) => {
+        if (areaName === 'local' && changes.translateText && changes.translateText.newValue) {
+          setInputText(changes.translateText.newValue);
+          chrome.storage.local.remove('translateText');
+        }
+      };
+      chrome.storage.onChanged.addListener(handleStorageChange);
+      return () => {
+        chrome.storage.onChanged.removeListener(handleStorageChange);
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    if (state.isAvailable && !translator && !state.isCreating) {
+      createTranslator();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.isAvailable, translator, state.isCreating]);
 
   const checkTranslatorAvailability = async () => {
     try {
@@ -166,10 +198,8 @@ export const TranslatorViewer: React.FC<TranslatorProps> = ({
   };
 
   const handleSwapLanguages = () => {
-    if (onLanguageChange) {
-      onLanguageChange(targetLanguage, sourceLanguage);
-    }
-    // Clear translator when languages change
+    setSourceLanguage(targetLanguage);
+    setTargetLanguage(sourceLanguage);
     if (translator) {
       translator.destroy();
       setTranslator(null);
@@ -191,22 +221,41 @@ export const TranslatorViewer: React.FC<TranslatorProps> = ({
 
   return (
     <div className="space-y-4 w-full max-w-full">
-      {/* Language Selection */}
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Languages className="h-5 w-5" />
+            AI Translator
+            <Badge variant="outline">Chrome Built-in AI</Badge>
+          </CardTitle>
+          <CardDescription>
+            Translate knowledge into different languages
+          </CardDescription>
+        </CardHeader>
+      </Card>
       <Card className="w-full">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
             <Languages className="h-4 w-4" />
             <span className="flex-1">Language Translation</span>
-            {state.isAvailable && (
-              <Badge variant="default" className="text-xs">
-                {getLanguageName(sourceLanguage)} → {getLanguageName(targetLanguage)}
-              </Badge>
-            )}
           </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="flex items-center gap-2 text-sm">
-            <span className="font-medium">{getLanguageName(sourceLanguage)}</span>
+          <div className="flex items-center gap-2 text-sm mt-2">
+            <Select
+              value={sourceLanguage}
+              onValueChange={setSourceLanguage}
+              disabled={state.isTranslating || state.isCreating}
+            >
+              <SelectTrigger className="font-medium border rounded px-2 py-1 bg-white w-[200px]">
+                <SelectValue placeholder="Source Language" />
+              </SelectTrigger>
+              <SelectContent>
+                {languages.map(lang => (
+                  <SelectItem key={lang.code} value={lang.code}>
+                    {lang.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Button
               variant="outline"
               size="sm"
@@ -216,13 +265,24 @@ export const TranslatorViewer: React.FC<TranslatorProps> = ({
             >
               <ArrowRightLeft className="h-3 w-3" />
             </Button>
-            <span className="font-medium">{getLanguageName(targetLanguage)}</span>
+            <Select
+              value={targetLanguage}
+              onValueChange={setTargetLanguage}
+              disabled={state.isTranslating || state.isCreating}
+            >
+              <SelectTrigger className="font-medium border rounded px-2 py-1 bg-white w-[200px]">
+                <SelectValue placeholder="Target Language" />
+              </SelectTrigger>
+              <SelectContent>
+                {languages.map(lang => (
+                  <SelectItem key={lang.code} value={lang.code}>
+                    {lang.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Status Card */}
-      <Card className="w-full">
+        </CardHeader>
         <CardContent className="pt-4">
           <div className="flex items-center gap-2 mb-3">
             {state.isAvailable === null ? (
@@ -241,7 +301,6 @@ export const TranslatorViewer: React.FC<TranslatorProps> = ({
               }
             </span>
           </div>
-
           {/* Download Progress */}
           {state.isCreating && (
             <div className="space-y-2">
@@ -252,23 +311,11 @@ export const TranslatorViewer: React.FC<TranslatorProps> = ({
               <Progress value={state.downloadProgress} className="h-2" />
             </div>
           )}
-
           {/* Error Display */}
           {state.error && (
             <div className="text-xs text-red-600 bg-red-50 p-2 rounded">
               {state.error}
             </div>
-          )}
-
-          {/* Create Translator Button */}
-          {state.isAvailable && !translator && !state.isCreating && (
-            <Button
-              onClick={createTranslator}
-              className="w-full"
-              size="sm"
-            >
-              Initialize Translator
-            </Button>
           )}
         </CardContent>
       </Card>

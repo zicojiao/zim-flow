@@ -15,18 +15,23 @@
     "@radix-ui/react-checkbox": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-progress": "^1.1.7",
+    "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.12",
     "@radix-ui/react-tooltip": "^1.1.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "katex": "^0.16.22",
     "lucide-react": "^0.407.0",
+    "ollama": "^0.5.16",
     "plasmo": "0.90.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-markdown": "8.0.7",
+    "react-markdown": "6.0.3",
+    "rehype-katex": "^7.0.1",
     "remark-gfm": "^3.0.1",
+    "remark-math": "^6.0.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "zustand": "^4.5.4"
@@ -35,6 +40,7 @@
     "@antfu/eslint-config": "^2.22.0",
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
     "@types/chrome": "0.0.258",
+    "@types/dom-chromium-ai": "^0.0.7",
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
@@ -46,8 +52,7 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://*/*",
-      "http://*/*"
+      "<all_urls>"
     ],
     "permissions": [
       "sidePanel",
