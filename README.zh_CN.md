@@ -12,7 +12,7 @@ ZimFlow 是一款结合谷歌 Gemini Nano 与 Gemma3 的 Chrome 扩展，专为�
 
 ## 视频演示
 
-https://www.youtube.com/watch?v=Iyux9iH8nHI
+https://www.youtube.com/watch?v=591HQWaP2Gg
 
 ---
 
