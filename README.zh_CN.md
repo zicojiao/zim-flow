@@ -85,11 +85,11 @@ Gemma3 使用 Ollama 进行部署，请确保本地已正确部署并启动 Olla
 ---
 
 ## 主要功能代码
-- `src/components/GemmaAIViewer.tsx`（基于 Gemma3 的多模态问答）
-- `src/components/SummaryViewer.tsx`（基于 Chrome 内置的 Gemini Nano 的知识摘要生成）
-- `src/components/TranslatorViewer.tsx`（基于 Chrome 内置的 Gemini Nano 的离线翻译）
-- `src/background.ts`（负责右键菜单、消息分发等逻辑）
-- `src/content.ts`（负责网页内容截图、与 background 通信等内容脚本）
+- [`src/components/GemmaAIViewer.tsx`](https://github.com/zicojiao/zim-flow/blob/main/src/components/GemmaAIViewer.tsx)（基于 Gemma3 的多模态问答）
+- [`src/components/SummaryViewer.tsx`](https://github.com/zicojiao/zim-flow/blob/main/src/components/SummaryViewer.tsx)（基于 Chrome 内置的 Gemini Nano 的知识摘要生成）
+- [`src/components/TranslatorViewer.tsx`](https://github.com/zicojiao/zim-flow/blob/main/src/components/TranslatorViewer.tsx)（基于 Chrome 内置的 Gemini Nano 的离线翻译）
+- [`src/background.ts`](https://github.com/zicojiao/zim-flow/blob/main/src/background.ts)（负责右键菜单、消息分发等逻辑）
+- [`src/content.ts`](https://github.com/zicojiao/zim-flow/blob/main/src/content.ts)（负责网页内容截图、与 background 通信等内容脚本）
 
 ---
 

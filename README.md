@@ -84,11 +84,11 @@ Gemma3 is deployed using Ollama. Please ensure Ollama is installed and running l
 ---
 
 ## Key Source Files
-- `src/components/GemmaAIViewer.tsx` (Gemma3-based multimodal Q&A)
-- `src/components/SummaryViewer.tsx` (Knowledge summarization using Chrome built-in Gemini Nano)
-- `src/components/TranslatorViewer.tsx` (Offline translation using Chrome built-in Gemini Nano)
-- `src/background.ts` (Handles context menu, message dispatch, etc.)
-- `src/content.ts` (Handles webpage screenshot, communication with background, etc.)
+- [`src/components/GemmaAIViewer.tsx`](https://github.com/zicojiao/zim-flow/blob/main/src/components/GemmaAIViewer.tsx) (Gemma3-based multimodal Q&A)
+- [`src/components/SummaryViewer.tsx`](https://github.com/zicojiao/zim-flow/blob/main/src/components/SummaryViewer.tsx) (Knowledge summarization using Chrome built-in Gemini Nano)
+- [`src/components/TranslatorViewer.tsx`](https://github.com/zicojiao/zim-flow/blob/main/src/components/TranslatorViewer.tsx) (Offline translation using Chrome built-in Gemini Nano)
+- [`src/background.ts`](https://github.com/zicojiao/zim-flow/blob/main/src/background.ts) (Handles context menu, message dispatch, etc.)
+- [`src/content.ts`](https://github.com/zicojiao/zim-flow/blob/main/src/content.ts) (Handles webpage screenshot, communication with background, etc.)
 
 ---
 

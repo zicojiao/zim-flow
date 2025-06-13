@@ -1,5 +1,4 @@
 export { }
-console.log("content injected");
 
 
 // Plasmo content script: handles overlay, selection, and submit
